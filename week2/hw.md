@@ -48,4 +48,41 @@ answer:
 1.6G    ./ollama_files
 ```
 # Q5. Adding the weights
+```Dockerfile
+FROM ollama/ollama
+COPY ./ollama_files /root/.ollama
+```
 # Q6. Serving it
+```bash
+docker build -t ollama-gemma2b -f week2/Dockerfile .
+docker run -it --rm -p 11434:11434 ollama-gemma2b
+
+pip install openai
+python3.10 week2/chat-client.py
+```
+
+```python
+from openai import OpenAI
+import tiktoken
+
+client = OpenAI(
+    base_url='http://localhost:11434/v1/',
+    api_key='ollama',
+)
+
+prompt = "What's the formula for energy?"
+
+response = client.chat.completions.create(
+    model='gemma:2b',
+    messages=[{"role": "user", "content": prompt}],
+    temperature=0.0
+)
+
+print(response.usage.completion_tokens)
+```
+link to the code: [python code](./chat-client.py)
+
+answer:
+```
+304
+```
