@@ -1,0 +1,10 @@
+- [ ] ES
+- [ ] qadrant
+- [ ] dockerize
+- [ ] k8s
+- [ ] helm
+- [ ] docker compose
+- [ ] package go for command
+- [ ] UI
+- [ ] interface LLM with various implementations
+- [ ] error handling
