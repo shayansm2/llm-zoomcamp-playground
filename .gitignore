@@ -1,2 +1,4 @@
 .obsidian/*
 .vscode/*
+.venv/*
+.qdrant_storage/*
