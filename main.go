@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	"github.com/shayansm2/shell-genie/llm"
+	"github.com/shayansm2/shell-genie/prompt"
 )
 
 const EXIT = "q"
@@ -16,15 +17,19 @@ func main() {
 	ollama := llm.GetLLM()
 	for {
 		fmt.Print("> ")
-		userPrompt, err := reader.ReadString('\n')
+		userInput, err := reader.ReadString('\n')
 		if err != nil {
 			panic(err)
 		}
-		userPrompt = strings.TrimSpace(userPrompt)
-		if userPrompt == EXIT {
+		userInput = strings.TrimSpace(userInput)
+		if userInput == EXIT {
 			break
 		}
-		response, err := ollama.Generate(userPrompt)
+		llmPrompt, err := prompt.Generate("template", map[string]string{"Question": userInput})
+		if err != nil {
+			panic(err)
+		}
+		response, err := ollama.Generate(llmPrompt)
 		if err != nil {
 			panic(err)
 		}
